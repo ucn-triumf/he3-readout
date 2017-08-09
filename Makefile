@@ -6,7 +6,7 @@ OSFLAGS  =  -DOS_LINUX -Dextname
 CFLAGS   =  -g -O2 -Wall -Wuninitialized -I$(INC_DIR) -I$(DRV_DIR) -I$(VMICHOME)/include -I$(MIDASSYS)/include -I$(MIDASSYS)/drivers/ -I$(MIDASSYS)/drivers/vme -I$(MIDASSYS)/drivers/vme/vmic -I/home/lindner/packages/vmisft-7433-3.6-KO5/vme_universe/include
 CXXFLAGS = $(CFLAGS) -DHAVE_ROOT -DUSE_ROOT -I$(ROOTSYS)/include
 
-LIBS = -lm -lz -lutil -lnsl -lpthread -lrt
+LIBS = -lm -lz -lutil -lnsl -lpthread -lrt -L/home/lindner/packages/vmisft-7433-3.6-KO5/vme_universe
 
 DRV_DIR         = $(MIDASSYS)/drivers
 INC_DIR         = $(MIDASSYS)/include
@@ -32,6 +32,9 @@ vmicvme.o: $(MIDASSYS)/drivers/vme/vmic/vmicvme.c
 
 fev785.exe: $(MIDASLIBS) $(LIB_DIR)/mfe.o fev785.o gefvme.o   v792.o v1190B.o 
 	$(CXX) -o $@ $(CFLAGS) $(OSFLAGS) $^ $(MIDASLIBS)   $(LIBS) $(CFLAGS) # -lvme
+
+#fev785.exe: $(MIDASLIBS) $(LIB_DIR)/mfe.o fev785.o vmicvme.o   v792.o v1190B.o 
+#	$(CXX) -o $@ $(CFLAGS) $(OSFLAGS) $^ $(MIDASLIBS)   $(LIBS) $(CFLAGS) # -lvme
 
 
 %.o: %.c
