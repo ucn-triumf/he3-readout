@@ -149,7 +149,7 @@ BANK_LIST trigger_bank_list[] = {
 
 EQUIPMENT equipment[] = {
 
-   {"FEV785",               /* equipment name */
+   {"HE3_Detector",               /* equipment name */
     {1, 0,                   /* event ID, trigger mask */
      "SYSTEM",               /* event buffer */
 #ifdef USE_INT
@@ -312,7 +312,8 @@ INT frontend_init()
 
   // Setup ADCs at start, rather than only at begin_of_run...
   printf("ADC0\n");
-  v792_Setup(myvme, VADC0_BASE, 2);
+  v792_Setup(myvme, VADC0_BASE, 0);
+  //  v792_Setup(myvme, VADC0_BASE, 2);
   /* Initialize the V792s ADC0 --*/
   /* Load Threshold */
   
@@ -389,7 +390,7 @@ INT begin_of_run(INT run_number, char *error)
   //#if defined V792_CODE
   //-------- ADCs ------------------------------------------
   printf("ADC0\n");
-  v792_Setup(myvme, VADC0_BASE, 2);
+  v792_Setup(myvme, VADC0_BASE, 0);
 
   /* Initialize the V792s ADC0 --*/
   /* Load Threshold */
