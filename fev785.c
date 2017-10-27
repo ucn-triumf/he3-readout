@@ -352,6 +352,8 @@ INT frontend_init()
   reg = v792_Read16(myvme, VADC0_BASE,0x1022);
   printf("reg 0x1022 0x%x\n",reg);
 
+  // enable the overflow bit (so we save overflow events)
+  mvme_write_value(myvme, VADC0_BASE+V792_BIT_SET2_RW, 0x8);
   /* print message and return FE_ERR_HW if frontend should not be started */
   
   return SUCCESS;
@@ -405,6 +407,7 @@ INT begin_of_run(INT run_number, char *error)
     printf("Threshold[%i] = 0x%4.4x\n", i+1, ts.v792.threshold1[i+1]);
   }
 
+
   v792_DataClear(myvme, VADC0_BASE);
   csr = v792_CSR1Read(myvme, VADC0_BASE);
   printf("Data Ready ADC0: 0x%x\n", csr);
@@ -415,6 +418,9 @@ INT begin_of_run(INT run_number, char *error)
 
   reg = v792_Read16(myvme, VADC0_BASE,0x100E);
   printf("reg 0x100E 0x%x\n",reg);
+
+  // enable the overflow bit (so we save overflow events)
+  mvme_write_value(myvme, VADC0_BASE+V792_BIT_SET2_RW, 0x8);
 
   //#endif
 
