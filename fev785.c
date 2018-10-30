@@ -18,13 +18,16 @@
 #undef  VF48_CODE
 #undef  VMEIO_CODE
 #undef V1729_CODE
-
+//#include <typeinfo>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "midas.h"
 #include "mvmestd.h"
-#include "vmicvme.h"
+#include "gefvme.h"
 #include "vmeio.h"
+#include <unistd.h>
+
 #include "v1190B.h"
 #include "v792.h"
 //#include "vf48.h"
@@ -43,8 +46,8 @@ int trig_level =  0;
 #define TRIG_LEVEL  (int) 1
 #define INT_LEVEL   (int) 3
 #define INT_VECTOR  (int) 0x16
-extern INT_INFO int_info;
-int myinfo = VME_INTERRUPT_SIGEVENT;
+//extern INT_INFO int_info;
+//int myinfo = VME_INTERRUPT_SIGEVENT;
 
 /* make frontend functions callable from the C framework */
 #ifdef __cplusplus
@@ -761,11 +764,13 @@ INT interrupt_configure(INT cmd, INT source, PTYPE adr)
     if (inRun) mvme_write_value(myvme, VLAM_BASE+4, 0x0);
     break;
   case CMD_INTERRUPT_ATTACH:
+    /*
     mvme_set_dmode(myvme, MVME_DMODE_D32);
     mvme_interrupt_attach(myvme, INT_LEVEL, INT_VECTOR, (void *)adr, &myinfo);
     mvme_write_value(myvme, VLAM_BASE+0x10, INT_VECTOR);
     vec = mvme_read_value(myvme, VLAM_BASE+0x10);
     printf("Interrupt Attached to 0x%x for vector:0x%x\n", adr, vec&0xFF);
+    */
     break;
   case CMD_INTERRUPT_DETACH:
     printf("Interrupt Detach\n");
