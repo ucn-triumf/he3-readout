@@ -50,9 +50,6 @@ int trig_level =  0;
 //int myinfo = VME_INTERRUPT_SIGEVENT;
 
 /* make frontend functions callable from the C framework */
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /*-- Globals -------------------------------------------------------*/
 
@@ -177,9 +174,7 @@ EQUIPMENT equipment[] = {
    {""}
 };
 
-#ifdef __cplusplus
-}
-#endif
+
 
 /********************************************************************\
               Callback routines for system transitions
@@ -915,7 +910,7 @@ BOOL read_tdc(char*pevent, int evt_num, BOOL wait)
       bank_name[3] = '0' + t;
       bank_name[4] = 0;
 
-      bk_create(pevent, bank_name, TID_DWORD, &pdata32);
+      bk_create(pevent, bank_name, TID_DWORD, (void **)&pdata32);
 
       int count = v1190_DataRead(myvme, b, pdata32, nw);
 
@@ -972,7 +967,7 @@ INT read_trigger_event(char *pevent, INT off)
   ///------------------------------
   ///------------------------------
   /* create structured ADC0 bank */
-  bk_create(pevent, "ADC0", TID_DWORD, &pdata);
+  bk_create(pevent, "ADC0", TID_DWORD, (void **)&pdata);
   v792_EvtCntRead(myvme, VADC0_BASE, &evtcnt);
   /* Read Event */
   //printf("read data... evtcnt = %x \n",evtcnt);
@@ -1026,7 +1021,7 @@ INT read_scaler_event(char *pevent, INT off)
   bk_init(pevent);
   
   /* create SCLR bank */
-  bk_create(pevent, "SCLR", TID_DWORD, &pdata);
+  bk_create(pevent, "SCLR", TID_DWORD, (void **)&pdata);
   
   /* read scaler bank */
   bk_close(pevent, pdata);
